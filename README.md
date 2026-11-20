@@ -3,8 +3,11 @@
 Scrape thousands of web pages to clean Markdown in minutes with Python and
 [Olostep](https://www.olostep.com) Maps + Batches.
 
-> **Demo video:** _Scraping 50,000 Pages in Under 20 Minutes with Python
-> and Olostep_ (link coming soon)
+## Demo video
+
+[![Scraping 50,000 Pages in Under 20 Minutes with Python and Olostep](https://img.youtube.com/vi/u7IWehx7dN0/hqdefault.jpg)](https://youtu.be/u7IWehx7dN0)
+
+▶ **[Watch on YouTube: Scraping 50,000 Pages in Under 20 Minutes with Python and Olostep](https://youtu.be/u7IWehx7dN0)**
 
 ## Features
 
