@@ -13,6 +13,7 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from urllib.parse import urlsplit
 
+from rich.console import Console
 from rich.logging import RichHandler
 
 MAX_SLUG_LENGTH = 80
@@ -95,13 +96,17 @@ class Timer:
         self.stop()
 
 
-def setup_logging(verbose: bool = False) -> None:
-    """Route ``logging`` through rich so logs and progress bars play nicely."""
+def setup_logging(console: Console, verbose: bool = False) -> None:
+    """Route ``logging`` through rich so logs and progress bars play nicely.
+
+    Pass the same ``console`` the progress bars use: rich then prints log lines
+    above the live bars instead of tangling them.
+    """
     logging.basicConfig(
         level=logging.DEBUG if verbose else logging.INFO,
         format="%(message)s",
         datefmt="[%X]",
-        handlers=[RichHandler(show_path=False, rich_tracebacks=True)],
+        handlers=[RichHandler(console=console, show_path=False, rich_tracebacks=True)],
         force=True,
     )
     # The SDK and httpx are chatty at INFO; keep them quiet unless verbose.

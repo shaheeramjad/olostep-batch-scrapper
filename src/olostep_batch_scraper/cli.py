@@ -289,7 +289,7 @@ def _save_dry_run(settings: Settings, urls: list[str], seconds: float) -> None:
 def main(argv: list[str] | None = None) -> int:
     """Console-script entry point. Returns a process exit code."""
     settings, verbose = parse_settings(argv)
-    setup_logging(verbose)
+    setup_logging(console, verbose)
     try:
         summary = asyncio.run(run(settings))
     except KeyboardInterrupt:

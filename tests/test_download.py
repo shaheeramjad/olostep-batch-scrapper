@@ -113,6 +113,9 @@ def test_junk_reason_flags_404_and_block_pages() -> None:
     assert junk_reason("Page not found - GOV.UK\n\nSorry...") == "not found (404 page)"
     assert junk_reason("Page blocked by your school\n\nBLOCKED") is not None
     assert junk_reason("Access Denied\n\nYou don't have permission") is not None
+    portal = "Example Org - Sign In\n\nPlease review the Acceptable Usage Policy."
+    assert junk_reason(portal) is not None
+    assert junk_reason("No longer available - GOV.UK\n\n...") == "not found (404 page)"
 
 
 def test_junk_reason_keeps_real_pages_about_errors() -> None:

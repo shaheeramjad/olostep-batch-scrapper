@@ -24,10 +24,17 @@ BACKOFF_SECONDS = 1.0  # doubled on each retry: 1s, 2s, ...
 # first line of Olostep's Markdown, so we only match there (a docs page *about*
 # 404 errors is still real content).
 _JUNK_TITLES = {
-    "not found (404 page)": re.compile(r"page not found|^404\b|404 not found", re.I),
+    "not found (404 page)": re.compile(
+        r"page not found|^404\b|404 not found|no longer available"
+        r"|page you.re looking for is no longer here",
+        re.I,
+    ),
     "access denied page": re.compile(r"access denied|^403\b", re.I),
 }
-_BLOCK_PAGE = re.compile(r"page blocked by|this site is blocked", re.I)
+# Filter or sign-in pages from the network in front of the scraper, not the site.
+_BLOCK_PAGE = re.compile(
+    r"page blocked by|this site is blocked|acceptable usage policy", re.I
+)
 
 
 @dataclass(frozen=True)
@@ -185,7 +192,7 @@ def junk_reason(markdown: str) -> str | None:
     """Return why a page is junk (404, blocked, ...) or ``None`` if it is fine."""
     head = markdown.lstrip()[:600]
     if _BLOCK_PAGE.search(head):
-        return "blocked page (network filter)"
+        return "blocked or sign-in page (network filter)"
     title = head.splitlines()[0].strip() if head else ""
     for reason, pattern in _JUNK_TITLES.items():
         if pattern.search(title):
